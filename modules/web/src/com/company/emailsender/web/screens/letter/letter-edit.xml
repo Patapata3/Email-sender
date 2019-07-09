@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.emailsender.web.screens.letter">
+    <data>
+        <instance id="letterDc"
+                  class="com.company.emailsender.entity.Letter"
+                  view="letter-with-receivers">
+            <loader/>
+            <collection id="receiversDc" property="receivers"/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="letterDc">
+            <column width="250px">
+                <textField id="titleField" property="title"/>
+                <textField id="contentField" property="content"/>
+                <table id="receiversTable" dataContainer="receiversDc" height="200px" width="400px">
+                    <columns>
+                        <column id="name"/>
+                        <column id="email"/>
+                    </columns>
+                    <actions>
+                        <action id="create" type="create"/>
+                        <action id="edit" type="edit"/>
+                        <action id="remove" type="remove"/>
+                    </actions>
+                    <buttonsPanel>
+                        <button id="createButton" action="receiversTable.create" caption="Create"/>
+                        <button id="editButton" action="receiversTable.edit" caption="Edit"/>
+                        <button id="removeButton" action="receiversTable.remove" caption="Remove"/>
+                    </buttonsPanel>
+                </table>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>
