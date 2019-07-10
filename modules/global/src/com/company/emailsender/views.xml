@@ -4,4 +4,9 @@
     <view entity="emailsender_Letter" name="letter-with-receivers" extends="_local">
         <property name="receivers" view="_local"/>
     </view>
+    <view entity="emailsender_History" name="history-with-letter" extends="_local">
+        <property name="letter" view="_local">
+            <property name="receivers" view="_minimal"/>
+        </property>
+    </view>
 </views>

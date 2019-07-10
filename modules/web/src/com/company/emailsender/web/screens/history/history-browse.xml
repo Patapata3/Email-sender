@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="History browser"
+        focusComponent="historiesTable"
+        messagesPack="com.company.emailsender.web.screens.history">
+    <data readOnly="true">
+        <collection id="historiesDc"
+                    class="com.company.emailsender.entity.History"
+                    view="history-with-letter">
+            <loader id="historiesDl">
+                <query>
+                    <![CDATA[select e from emailsender_History e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="historiesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="historiesTable"
+                dataLoader="historiesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="historiesTable"
+                    width="100%"
+                    dataContainer="historiesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="date"/>
+                <column id="letter.title"/>
+                <column id="letter.content"/>
+                <column id="letter.receivers"/>
+            </columns>
+            <rowsCount/>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -2,5 +2,6 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application-emailsender" insertBefore="administration">
         <item screen="emailsender_Letter.browse"/>
+        <item screen="emailsender_History.browse"/>
     </menu>
 </menu-config>

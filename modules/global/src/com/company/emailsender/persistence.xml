@@ -4,5 +4,6 @@
 
         <class>com.company.emailsender.entity.Letter</class>
         <class>com.company.emailsender.entity.Receiver</class>
+        <class>com.company.emailsender.entity.History</class>
     </persistence-unit>
 </persistence>

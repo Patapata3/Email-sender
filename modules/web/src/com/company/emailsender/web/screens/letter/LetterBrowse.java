@@ -1,20 +1,24 @@
 package com.company.emailsender.web.screens.letter;
 
+import com.company.emailsender.entity.History;
 import com.company.emailsender.entity.Receiver;
+import com.haulmont.cuba.core.app.DataService;
 import com.haulmont.cuba.core.app.EmailService;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.EmailInfo;
+import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.Collapsable;
 import com.haulmont.cuba.gui.components.Table;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
-import com.haulmont.cuba.gui.model.CollectionPropertyContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.emailsender.entity.Letter;
 
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
+
 
 @UiController("emailsender_Letter.browse")
 @UiDescriptor("letter-browse.xml")
@@ -34,7 +38,15 @@ public class LetterBrowse extends StandardLookup<Letter> {
     @Inject
     private Button sendBtn;
 
+    @Inject
+    private Metadata metadata;
+
+    @Inject
+    private DataManager dataManager;
+
     private Letter SelectedLetter = null;
+
+
 
 
     @Subscribe("lettersTable")
@@ -56,6 +68,10 @@ public class LetterBrowse extends StandardLookup<Letter> {
                     null
             );
             emailService.sendEmailAsync(emailInfo);
+            History newNote = metadata.create(History.class);
+            newNote.setDate(new Date());
+            newNote.setLetter(SelectedLetter);
+            dataManager.commit(newNote);
             notifications.create(Notifications.NotificationType.TRAY).withCaption("Message has been successfully sent")
                     .show();
         }
