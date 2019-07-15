@@ -23,14 +23,6 @@ public class History extends StandardEntity {
     @JoinColumn(name = "LETTER_ID")
     protected Letter letter;
 
-    public History(@NotNull Date date, @NotNull Letter letter) {
-        this.date = date;
-        this.letter = letter;
-    }
-
-    public History() {
-    }
-
     public Letter getLetter() {
         return letter;
     }

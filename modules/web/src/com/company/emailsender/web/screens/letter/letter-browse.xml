@@ -29,6 +29,7 @@
                     dataContainer="lettersDc">
             <actions>
                 <action id="create" type="create"/>
+                <action id="send" trackSelection="true" caption="Send"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
@@ -43,7 +44,7 @@
                 <button id="createBtn" action="lettersTable.create"/>
                 <button id="editBtn" action="lettersTable.edit"/>
                 <button id="removeBtn" action="lettersTable.remove"/>
-                <button id="sendBtn" caption="Send" enable="false"/>
+                <button id="sendBtn" caption="Send" action="lettersTable.send"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

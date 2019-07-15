@@ -1,23 +1,17 @@
 package com.company.emailsender.web.screens.letter;
 
 import com.company.emailsender.entity.History;
-import com.company.emailsender.entity.Receiver;
-import com.haulmont.cuba.core.app.DataService;
-import com.haulmont.cuba.core.app.EmailService;
-import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.EmailInfo;
+import com.company.emailsender.service.HistoryService;
+import com.company.emailsender.service.LetterService;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.Notifications;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.components.Action;
 import com.haulmont.cuba.gui.model.CollectionContainer;
-import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.emailsender.entity.Letter;
 
 import javax.inject.Inject;
 import java.util.Date;
-import java.util.List;
 
 
 @UiController("emailsender_Letter.browse")
@@ -30,48 +24,23 @@ public class LetterBrowse extends StandardLookup<Letter> {
     private CollectionContainer<Letter> lettersDc;
 
     @Inject
-    private EmailService emailService;
-
-    @Inject
     private Notifications notifications;
 
     @Inject
-    private Button sendBtn;
+    private LetterService letterService;
+
+    @Inject
+    private HistoryService historyService;
 
     @Inject
     private Metadata metadata;
 
-    @Inject
-    private DataManager dataManager;
-
-    private Letter SelectedLetter = null;
-
-
-
-
-    @Subscribe("lettersTable")
-    private void onLettersTableSelection(Table.SelectionEvent<Letter> event) {
-        if (!sendBtn.isEnabled()) {
-            sendBtn.setEnabled(true);
-        }
-        SelectedLetter = event.getSource().getSingleSelected();
-    }
-
-    @Subscribe("sendBtn")
-    private void onSendBtnClick(Button.ClickEvent event) {
-        if(!SelectedLetter.getReceivers().isEmpty()) {
-            EmailInfo emailInfo = new EmailInfo(
-                    ReceiversToString(SelectedLetter.getReceivers()),
-                    SelectedLetter.getTitle(),
-                    null,
-                    SelectedLetter.getContent(),
-                    null
-            );
-            emailService.sendEmailAsync(emailInfo);
-            History newNote = metadata.create(History.class);
-            newNote.setDate(new Date());
-            newNote.setLetter(SelectedLetter);
-            dataManager.commit(newNote);
+    @Subscribe("lettersTable.send")
+    private void onLettersTableSend(Action.ActionPerformedEvent event) {
+        Letter selectedLetter = lettersDc.getItem();
+        if(!selectedLetter.getReceivers().isEmpty()) {
+            letterService.send(selectedLetter);
+            historyService.addHistory(createHistory(selectedLetter));
             notifications.create(Notifications.NotificationType.TRAY).withCaption("Message has been successfully sent")
                     .show();
         }
@@ -79,14 +48,13 @@ public class LetterBrowse extends StandardLookup<Letter> {
             notifications.create(Notifications.NotificationType.ERROR).withCaption("Message cannot be sent")
                     .withDescription("The receivers' list is empty").show();
         }
-
     }
 
-    private String ReceiversToString(List<Receiver> receivers) {
-        String result = receivers.get(0).getEmail();
-        for (int i = 1; i < receivers.size(); i++) {
-            result += ("," + receivers.get(i).getEmail());
-        }
-        return result;
+    private History createHistory(Letter letter)
+    {
+        History newNote = metadata.create(History.class);
+        newNote.setDate(new Date());
+        newNote.setLetter(letter);
+        return newNote;
     }
 }
