@@ -25,7 +25,7 @@
         </filter>
         <groupTable id="historiesTable"
                     width="100%"
-                    dataContainer="historiesDc">
+                    dataContainer="historiesDc" multiselect="true">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -38,6 +38,9 @@
                 <column id="letter.receivers"/>
             </columns>
             <rowsCount/>
+            <buttonsPanel>
+                <button id="createReport" caption="Create Report"/>
+            </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
