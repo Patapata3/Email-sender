@@ -8,6 +8,9 @@ import com.haulmont.yarg.structure.Report;
 
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.AbstractCollection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import com.company.emailsender.entity.History;
@@ -33,7 +36,7 @@ public class ReportCreator implements CustomReport{
         row.createCell(2).setCellValue("Content");
         row.createCell(3).setCellValue("Receivers");
 
-        ReadOnlyLinkedMapValuesView histories = (ReadOnlyLinkedMapValuesView) Params.get("entities");
+        AbstractCollection<History> histories = (AbstractCollection<History>)Params.get("entities");
         for  ( Object entity: histories) {
             History history = (History)entity;
             rowNum++;
