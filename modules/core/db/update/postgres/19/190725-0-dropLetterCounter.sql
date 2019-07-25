@@ -1,0 +1,1 @@
+alter table emailsender_letter_counter rename to EMAILSENDER_LETTER_COUNTER__U20504 ;

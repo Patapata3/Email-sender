@@ -1,5 +1,6 @@
 package com.company.emailsender.web.screens.history;
 
+import com.haulmont.charts.gui.components.charts.SerialChart;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.GroupTable;
 import com.haulmont.cuba.gui.screen.*;

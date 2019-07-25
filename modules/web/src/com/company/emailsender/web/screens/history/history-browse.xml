@@ -2,7 +2,8 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="History browser"
         focusComponent="historiesTable"
-        messagesPack="com.company.emailsender.web.screens.history">
+        messagesPack="com.company.emailsender.web.screens.history"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd">
     <data readOnly="true">
         <collection id="historiesDc"
                     class="com.company.emailsender.entity.History"
@@ -25,7 +26,7 @@
         </filter>
         <groupTable id="historiesTable"
                     width="100%"
-                    dataContainer="historiesDc" multiselect="true">
+                    dataContainer="historiesDc" multiselect="true" height="100%">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>

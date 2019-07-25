@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd" class="com.company.emailsender.web.ExtAppMainWindow"
+        messagesPack="com.company.emailsender.web" xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+        extends="/com/haulmont/cuba/web/app/mainwindow/mainwindow.xml">
+    <dialogMode height="600" width="800"/>
+    <layout>
+        <split id="foldersSplit">
+            <workArea id="workArea">
+                <initialLayout>
+                    <chart:serialChart id="historyChart" categoryField="date" height="100%" width="100%">
+                        <chart:graphs>
+                            <chart:graph valueField="amount"/>
+                        </chart:graphs>
+                    </chart:serialChart>
+                </initialLayout>
+            </workArea>
+        </split>
+    </layout>
+</window>
