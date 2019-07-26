@@ -22,18 +22,20 @@ public class ExtAppMainWindow extends AppMainWindow {
     private DataService dataService;
 
     @Subscribe
-    private void onBeforeShow(BeforeShowEvent event) throws ParseException {
+    private void onBeforeShow(BeforeShowEvent event) {
         List<History> histories = dataManager.load(History.class).list();
         SimpleDateFormat dateOnly = new SimpleDateFormat("dd/MM/yyyy");
-        Map<Date, Set<History>> historyGroups = new HashMap<Date, Set<History>>();
+        Map<String, Set<History>> historyGroups = new TreeMap<String, Set<History>>();
 
         for (History note:
              histories) {
-            Date simpleDate = dateOnly.parse(dateOnly.format(note.getDate()));
+            String simpleDate = dateOnly.format(note.getDate());
             historyGroups.putIfAbsent(simpleDate, new HashSet<History>());
             historyGroups.get(simpleDate).add(note);
         }
-        for (Date key:
+
+
+        for (String key:
              historyGroups.keySet()) {
             historyChart.addData(MapDataItem.of("date", key,
                     "amount", historyGroups.get(key).size()));
